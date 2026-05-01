@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="bn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ডেইলি টু-ডু অ্যাপ</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>📝 আমার ডেইলি কাজ</h1>
+                <p id="currentDate"></p>
+            </header>
+
+            <main>
+                <section class="task-input">
+                    <h2>নতুন কাজ যোগ করুন</h2>
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="taskInput"
+                            placeholder="আপনার কাজ লিখুন..."
+                        />
+                        <select id="categorySelect" class="category-select">
+                            <option value="general">📝 সাধারণ</option>
+                            <option value="work">💼 কাজ</option>
+                            <option value="personal">👤 ব্যক্তিগত</option>
+                            <option value="urgent">🚨 জরুরি</option>
+                            <option value="study">📚 পড়াশোনা</option>
+                            <option value="health">🏥 স্বাস্থ্য</option>
+                        </select>
+                        <select id="prioritySelect" class="priority-select">
+                            <option value="low">🟢 নিম্ন</option>
+                            <option value="medium" selected>🟡 মাঝারি</option>
+                            <option value="high">🔴 উচ্চ</option>
+                        </select>
+                        <button id="addTaskBtn">➕ যোগ করুন</button>
+                    </div>
+
+                    <div class="search-section">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="🔍 কাজ খুঁজুন..."
+                        />
+                        <select id="filterSelect" class="filter-select">
+                            <option value="all">📋 সব</option>
+                            <option value="pending">⏳ বাকি</option>
+                            <option value="completed">✅ সম্পন্ন</option>
+                            <option value="rejected">❌ প্রত্যাখ্যান</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="task-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="list">
+                            📋 তালিকা
+                        </button>
+                        <button class="tab-btn" data-tab="document">
+                            📄 ডকুমেন্ট
+                        </button>
+                    </div>
+                </section>
+
+                <section class="task-content">
+                    <div id="listView" class="tab-content active">
+                        <div class="task-list">
+                            <h2>আজকের কাজের তালিকা</h2>
+                            <div id="taskContainer">
+                                <!-- Tasks will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="documentView" class="tab-content">
+                        <div class="document-view">
+                            <h2>📄 ডেইলি টাস্ক ডকুমেন্ট</h2>
+                            <div class="document-content">
+                                <div class="document-header">
+                                    <h3 id="docDate"></h3>
+                                    <div class="task-summary">
+                                        <span class="summary-item"
+                                            >মোট:
+                                            <strong id="docTotal"
+                                                >0</strong
+                                            ></span
+                                        >
+                                        <span class="summary-item"
+                                            >সম্পন্ন:
+                                            <strong id="docCompleted"
+                                                >0</strong
+                                            ></span
+                                        >
+                                        <span class="summary-item"
+                                            >বাকি:
+                                            <strong id="docPending"
+                                                >0</strong
+                                            ></span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="document-tasks" id="documentTasks">
+                                    <!-- Tasks will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="task-stats">
+                    <div class="progress-section">
+                        <h3>📊 আজকের অগ্রগতি</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="progressBar"></div>
+                            <span class="progress-text" id="progressText"
+                                >0%</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>মোট কাজ</h3>
+                            <span id="totalTasks">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>সম্পন্ন</h3>
+                            <span id="completedTasks">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>বাকি</h3>
+                            <span id="pendingTasks">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>জরুরি</h3>
+                            <span id="urgentTasks">0</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <button id="clearCompletedBtn">🗑️ সম্পন্ন কাজ মুছুন</button>
+                <button id="clearAllBtn">🔄 সব মুছুন</button>
+                <button id="downloadDocBtn" onclick="app.openDocumentModal()">
+                    📄 ডক প্রিভিউ
+                </button>
+                <button id="downloadTxtBtn" onclick="app.downloadDocument()">
+                    📥 ডাউনলোড
+                </button>
+                <button id="exportPdfBtn" onclick="app.exportToPDF()">
+                    📄 PDF
+                </button>
+                <button id="exportExcelBtn" onclick="app.exportToExcel()">
+                    � Excel
+                </button>
+                <button id="darkModeBtn" onclick="app.toggleDarkMode()">
+                    🌙 ডার্ক মোড
+                </button>
+            </footer>
+
+            <div id="notification" class="notification"></div>
+        </div>
+
+        <!-- Task Action Modal -->
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTaskTitle">কাজের বিবরণ</h3>
+                    <span class="close-btn" onclick="app.closeModal()"
+                        >&times;</span
+                    >
+                </div>
+
+                <div class="modal-body">
+                    <div class="task-info">
+                        <p id="modalTaskText"></p>
+                        <p id="modalTaskTime"></p>
+                    </div>
+
+                    <div class="modal-tabs">
+                        <div class="modal-tab-buttons">
+                            <button
+                                class="modal-tab-btn active"
+                                data-modal-tab="assign"
+                            >
+                                📋 Assign
+                            </button>
+                            <button
+                                class="modal-tab-btn"
+                                data-modal-tab="complete"
+                            >
+                                ✅ Complete
+                            </button>
+                            <button
+                                class="modal-tab-btn"
+                                data-modal-tab="reject"
+                            >
+                                ❌ Reject
+                            </button>
+                        </div>
+
+                        <div class="modal-tab-content">
+                            <div id="assignTab" class="modal-tab-pane active">
+                                <div class="assign-content">
+                                    <h4>কাজ এসাইন করুন</h4>
+                                    <div class="assign-options">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="priority"
+                                                value="high"
+                                            />
+                                            উচ্চ অগ্রাধিকার
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="priority"
+                                                value="medium"
+                                                checked
+                                            />
+                                            মাঝারি অগ্রাধিকার
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="priority"
+                                                value="low"
+                                            />
+                                            নিম্ন অগ্রাধিকার
+                                        </label>
+                                    </div>
+                                    <div class="assign-notes">
+                                        <textarea
+                                            placeholder="এসাইনমেন্ট নোট লিখুন..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        class="modal-action-btn"
+                                        onclick="app.assignTask()"
+                                    >
+                                        ✅ এসাইন করুন
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="completeTab" class="modal-tab-pane">
+                                <div class="complete-content">
+                                    <h4>কাজ সম্পন্ন করুন</h4>
+                                    <div class="complete-options">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                id="completedSuccessfully"
+                                            />
+                                            সফলভাবে সম্পন্ন হয়েছে
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                id="onTime"
+                                            />
+                                            সময়মতো সম্পন্ন হয়েছে
+                                        </label>
+                                    </div>
+                                    <div class="complete-notes">
+                                        <textarea
+                                            placeholder="সম্পন্ন হওয়ার বিবরণ লিখুন..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        class="modal-action-btn"
+                                        onclick="app.completeTask()"
+                                    >
+                                        ✅ সম্পন্ন করুন
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="rejectTab" class="modal-tab-pane">
+                                <div class="reject-content">
+                                    <h4>কাজ প্রত্যাখ্যান করুন</h4>
+                                    <div class="reject-reasons">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="rejectReason"
+                                                value="notRelevant"
+                                            />
+                                            প্রাসঙ্গিক নয়
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="rejectReason"
+                                                value="notPossible"
+                                            />
+                                            সম্ভব নয়
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="rejectReason"
+                                                value="postponed"
+                                            />
+                                            স্থগিত করা হয়েছে
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="rejectReason"
+                                                value="other"
+                                                checked
+                                            />
+                                            অন্য কারণ
+                                        </label>
+                                    </div>
+                                    <div class="reject-notes">
+                                        <textarea
+                                            placeholder="প্রত্যাখ্যানের কারণ লিখুন..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        class="modal-action-btn reject-btn"
+                                        onclick="app.rejectTask()"
+                                    >
+                                        ❌ প্রত্যাখ্যান করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Preview Modal -->
+        <div id="documentModal" class="modal">
+            <div class="modal-content document-modal-content">
+                <div class="modal-header">
+                    <h3>📄 ডকুমেন্ট প্রিভিউ</h3>
+                    <span class="close-btn" onclick="app.closeDocumentModal()"
+                        >&times;</span
+                    >
+                </div>
+
+                <div class="modal-body">
+                    <div class="document-toolbar">
+                        <button class="toolbar-btn" onclick="app.zoomIn()">
+                            🔍+
+                        </button>
+                        <button class="toolbar-btn" onclick="app.zoomOut()">
+                            🔍-
+                        </button>
+                        <button class="toolbar-btn" onclick="app.resetZoom()">
+                            🔄
+                        </button>
+                        <button
+                            class="toolbar-btn"
+                            onclick="app.printDocument()"
+                        >
+                            🖨️
+                        </button>
+                        <div class="zoom-level">100%</div>
+                    </div>
+
+                    <div class="document-preview" id="documentPreview">
+                        <div class="pdf-viewer" id="pdfViewer">
+                            <!-- Document content will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন - ডেইলি টু-ডু অ্যাপ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🔐 লগইন করুন</h1>
+                <p>আপনার ডেইলি টাস্ক ম্যানেজ করতে লগইন করুন</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="phoneNumber">📱 মোবাইল নম্বর</label>
+                    <input 
+                        type="tel" 
+                        id="phoneNumber" 
+                        name="phoneNumber" 
+                        placeholder="01XXXXXXXXX" 
+                        pattern="01[3-9][0-9]{8}" 
+                        required
+                        maxlength="11"
+                    >
+                    <small class="form-hint">11 ডিজিটের বাংলাদেশি মোবাইল নম্বর</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">🔒 পাসওয়ার্ড</label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="আপনার পাসওয়ার্ড" 
+                            required
+                            minlength="6"
+                        >
+                        <button type="button" id="togglePassword" class="toggle-password">
+                            👁️
+                        </button>
+                    </div>
+                    <small class="form-hint">ন্যূনতম 6 ডিজিটের পাসওয়ার্ড</small>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span>আমাকে মনে রাখুন</span>
+                    </label>
+                    <a href="#" class="forgot-password">পাসওয়ার্ড ভুলে গেছেন?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">🔐 লগইন করুন</span>
+                    <span class="btn-loading" style="display: none;">⏳ লোডিং...</span>
+                </button>
+
+                <div class="signup-link">
+                    <p>নতুন অ্যাকাউন্ট নেই? <a href="#" id="signupLink">📝 রেজিস্টার করুন</a></p>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <p>🔒 আপনার তথ্য সুরক্ষিত আছে</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="login.js"></script>
+</body>
+</html>
